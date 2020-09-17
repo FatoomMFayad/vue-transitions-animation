@@ -6,13 +6,18 @@
                 <hr>
                 <button class="btn btn-primary" @click="show = !show ">Show Alert</button>
                 <br><br>
-                <transition name="fade">
+                <!-- <transition name="fade">
                     <div class="alert alert-info" v-if="show">This is an alert</div>
                 </transition>
                 <transition name="slide" type="animation">
                     <div class="alert alert-info" v-if="show">This is an alert</div>
-                </transition>
-                <transition name="fade" appear>
+                </transition> -->
+                <transition                      
+                    appear
+                    enter-class=""
+                    enter-active-class="animated bounce"
+                    leave-class=""
+                    leave-active-class="animated shake">
                     <div class="alert alert-info" v-if="show">This is an alert</div>
                 </transition>
             </div>
