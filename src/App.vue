@@ -29,6 +29,22 @@
                     <div class="alert alert-info" v-if="show" key="info">This is some info</div>
                     <div class="alert alert-warning" v-else key="warning">This is some warning</div>
                 </transition>
+                <hr>
+                <button class="btn btn-primary" @click="Load = !Load">Load/Remove Element</button>
+                <br><br>
+                <transition
+                    @before-enter="beforeEnter"
+                    @enter="enter"
+                    @after-enter="afterEnter"
+                    @enter-cancelled="enterCancelled"
+                    
+                    @before-leave="beforeLeave"
+                    @leave="leave"
+                    @after-leave="afterLeave"
+                    @leave-cancelled="leaveCancelled">
+                    <div style="width: 100px; height: 100px; background-color: lightgreen" v-if="Load"></div>
+                </transition>
+            
             </div>
         </div>
     </div>
@@ -38,8 +54,37 @@
     export default {
         data() {
             return {
-                show: true,
+                show: false,
+                Load: true,
                 alertAnimation: 'fade'
+            }
+        },
+        methods: {
+            beforeEnter(el) {
+                console.log('beforeEnter');                
+            },
+            enter(el, done) {
+                console.log('Enter');
+                done();
+            },
+            afterEnter(el) {
+                console.log('After Enter');
+            },
+            enterCancelled(el) {
+                console.log('Enter Cancelled');
+            },
+            beforeLeave(el) {
+                console.log('Before Leave');
+            },
+            leave(el, done){
+                console.log('Leave');
+                done();
+            },
+            afterLeave(el) {
+                console.log('After Leave');
+            },
+            leaveCancelled(el) {
+                console.log('Leave Cancelled');
             }
         }
     }
