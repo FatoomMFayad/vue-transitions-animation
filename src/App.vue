@@ -43,7 +43,7 @@
                     @after-leave="afterLeave"
                     @leave-cancelled="leaveCancelled"
                     :css="false">
-                    <div style="width: 100px; height: 100px; background-color: lightgreen" v-if="Load"></div>
+                    <div style="width: 300px; height: 100px; background-color: lightgreen" v-if="Load"></div>
                 </transition>
             
             </div>
@@ -57,16 +57,28 @@
             return {
                 show: false,
                 Load: true,
-                alertAnimation: 'fade'
+                alertAnimation: 'fade',
+                elementWidth : 100
             }
         },
         methods: {
             beforeEnter(el) {
-                console.log('beforeEnter');                
+                console.log('beforeEnter'); 
+                this.elementWidth = 100;
+                el.style.width = this.elementWidth + 'px';                
             },
             enter(el, done) {
                 console.log('Enter');
-                done();
+                let round = 1;
+                const interval = setInterval(() => {
+                    el.style.width = (this.elementWidth + round * 10) + 'px';
+                    round++;
+                    if(round > 20) {
+                        clearInterval(interval);
+                        done();
+                    }
+                }, 20);
+                //done();
             },
             afterEnter(el) {
                 console.log('After Enter');
@@ -76,10 +88,20 @@
             },
             beforeLeave(el) {
                 console.log('Before Leave');
+                this.elementWidth = 300
+                el.style.width = this.elementWidth + 'px'; 
             },
             leave(el, done){
                 console.log('Leave');
-                done();
+                let round = 1;
+                const interval = setInterval(() => {
+                    el.style.width = (this.elementWidth - round * 10) + 'px';
+                    round++;
+                    if(round > 20) {
+                        clearInterval(interval);
+                        done();
+                    }
+                }, 20);
             },
             afterLeave(el) {
                 console.log('After Leave');
